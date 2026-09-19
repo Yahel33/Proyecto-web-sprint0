@@ -1,6 +1,6 @@
 # Stride & Co. Backend
 
-Backend inicial del proyecto integrador Stride & Co. construido con Node.js, Express Generator y respuestas mock.
+Backend inicial del proyecto integrador Stride & Co. construido con Node.js, Express Generator y respuestas de prueba enfocadas en el sistema de control de inventarios definido en el sprint 0.
 
 ## Requisitos
 
@@ -76,3 +76,7 @@ DELETE /api/resource/:id
 ## Calidad y pruebas
 
 El proyecto incluye logging de solicitudes HTTP con Morgan, manejo controlado de rutas inexistentes en formato JSON para la API, configuracion de ESLint y pruebas automatizadas de endpoints y controladores principales.
+
+## Relacion con sprint 0
+
+El sprint 0 fue para definir una aplicacion web para pequeños negocios que necesitan controlar sus productos, existencias, entradas, salidas y usuarios autorizados. Por eso los datos de prueba usan ejemplos de inventario como productos, cantidades disponibles, stock minimo, clientes y pedidos.

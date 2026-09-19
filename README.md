@@ -47,7 +47,7 @@ stride-co/
 ## Flujo
 
 ```text
-HTTP Request -> Express -> Route -> Controller -> Response Mock
+HTTP Request -> Express -> Route -> Controller -> Response de prueba
 ```
 
 ## Endpoints iniciales
@@ -63,7 +63,7 @@ Los recursos principales estan disponibles bajo `/api`:
 - `/api/customers`
 - `/api/orders`
 
-Cada recurso incluye operaciones REST mock:
+Cada recurso incluye operaciones REST con datos de prueba:
 
 ```text
 GET /api/resource
@@ -76,6 +76,10 @@ DELETE /api/resource/:id
 ## Calidad y pruebas
 
 El proyecto incluye logging de solicitudes HTTP con Morgan, manejo controlado de rutas inexistentes en formato JSON para la API, configuracion de ESLint y pruebas automatizadas de endpoints y controladores principales.
+
+## Relacion con Sprint 0
+
+El Sprint 0 definio una aplicacion web para pequenos negocios que necesitan controlar productos, existencias, entradas, salidas y usuarios autorizados. Por eso los datos de prueba usan ejemplos de inventario como productos, variantes, cantidades disponibles, stock minimo, clientes y pedidos.
 
 ## Relacion con sprint 0
 

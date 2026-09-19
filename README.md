@@ -81,6 +81,3 @@ El proyecto incluye logging de solicitudes HTTP con Morgan, manejo controlado de
 
 El Sprint 0 definio una aplicacion web para pequenos negocios que necesitan controlar productos, existencias, entradas, salidas y usuarios autorizados. Por eso los datos de prueba usan ejemplos de inventario como productos, variantes, cantidades disponibles, stock minimo, clientes y pedidos.
 
-## Relacion con sprint 0
-
-El sprint 0 fue para definir una aplicacion web para pequeños negocios que necesitan controlar sus productos, existencias, entradas, salidas y usuarios autorizados. Por eso los datos de prueba usan ejemplos de inventario como productos, cantidades disponibles, stock minimo, clientes y pedidos.

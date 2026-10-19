@@ -43,6 +43,16 @@ app.use(function (req, res, next) {
   next(createError(404));
 });
 
+app.use(function (err, req, res, next) {
+  if (err.name === 'UnauthorizedError') {
+    return res.status(401).json({
+      message: 'Unauthorized',
+      error: err.message
+    });
+  }
+  next(err);
+});
+
 app.use(function (err, req, res, _next) {
   if (req.path.startsWith('/api')) {
     return res.status(err.status || 500).json({

@@ -191,6 +191,28 @@ Proyecto-web-sprint0/
 - Emilio Gallardo Medrano - 385530
 - Santiago de la Mora Martinez - 385613
 
+## Base de datos
+
+El proyecto usa MySQL con Sequelize. La conexión está en `config/sequelize.js` con los valores de la clase: base `stride-co`, usuario `root`, contraseña `abcd1234`, `localhost:3306`.
+
+Para levantar la base con Docker:
+
+```bash
+docker run --name stride-mysql -e MYSQL_ROOT_PASSWORD=abcd1234 -e MYSQL_DATABASE=stride-co -p 3306:3306 -d mysql:8
+```
+
+Al ejecutar `npm start` la tabla `users` se crea sola con `sequelize.sync()`.
+
+### Prueba rápida
+
+```bash
+curl -X POST http://localhost:3000/api/auth/register -H "Content-Type: application/json" -d "{\"firstName\":\"Ana\",\"lastName\":\"Lopez\",\"email\":\"ana@stride.co\",\"password\":\"Secret123\"}"
+
+curl -X POST http://localhost:3000/api/auth/login -H "Content-Type: application/json" -d "{\"email\":\"ana@stride.co\",\"password\":\"Secret123\"}"
+
+curl http://localhost:3000/api/auth/me -H "Authorization: Bearer <token>"
+```
+
 ## Autenticación
 
 ### Contraseñas

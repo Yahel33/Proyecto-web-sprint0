@@ -66,4 +66,8 @@ async function login(req, res) {
   }
 }
 
-module.exports = { register, login };
+function me(req, res) {
+  res.status(200).json(req.user);
+}
+
+module.exports = { register, login, me };

@@ -212,4 +212,53 @@ El token solo lleva el id del usuario en `sub`. Se firma con `HS256` y valida `i
 
 | Método | Ruta | Descripción |
 |---|---|---|
-| `POST` | `/api/auth/register` | Crea un usuario con
+| `POST` | `/api/auth/register` | Crea un usuario con la contraseña hasheada. |
+| `POST` | `/api/auth/login` | Valida email y contraseña y devuelve el token. |
+| `GET` | `/api/auth/me` | Devuelve el usuario autenticado. Requiere token. |
+
+Ejemplo de login:
+
+```json
+{
+  "email": "ana@stride.co",
+  "password": "Secret123"
+}
+```
+
+Para las rutas protegidas se manda el token en el header:
+
+```
+Authorization: Bearer <token>
+```
+
+### Códigos de respuesta
+
+| Situación | Código |
+|---|---|
+| Login correcto | 200 |
+| Faltan email o password | 400 |
+| Credenciales incorrectas | 401 |
+| Usuario inactivo | 401 |
+| Sin token | 401 |
+| Token inválido o expirado | 401 |
+| `/api/auth/me` con token válido | 200 |
+
+### Variables de entorno
+
+Copiar `.env.example` como `.env` y llenar los valores. El `.env` no se sube al repositorio.
+
+```
+PORT=3000
+
+DB_NAME=stride-co
+DB_USER=root
+DB_PASSWORD=
+DB_HOST=localhost
+DB_PORT=3306
+
+JWT_SECRET=
+JWT_EXPIRES_IN=15m
+JWT_ISSUER=stride-co
+JWT_AUDIENCE=stride-co-api
+BCRYPT_SALT_ROUNDS=10
+```

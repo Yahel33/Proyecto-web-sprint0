@@ -13,6 +13,7 @@ var variantsRouter = require('./routes/variants');
 var inventoryRouter = require('./routes/inventory');
 var customersRouter = require('./routes/customers');
 var ordersRouter = require('./routes/orders');
+var authRouter = require('./routes/auth');
 
 var app = express();
 
@@ -35,6 +36,7 @@ app.use('/api/variants', variantsRouter);
 app.use('/api/inventory', inventoryRouter);
 app.use('/api/customers', customersRouter);
 app.use('/api/orders', ordersRouter);
+app.use('/api/auth', authRouter);
 
 // 404 controlado para rutas inexistentes.
 app.use(function (req, res, next) {

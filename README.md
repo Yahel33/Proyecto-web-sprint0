@@ -190,3 +190,26 @@ Proyecto-web-sprint0/
 - Yahel Santiago Uribe Mendoza - 382849
 - Emilio Gallardo Medrano - 385530
 - Santiago de la Mora Martinez - 385613
+
+## Autenticación
+
+### Contraseñas
+
+Las contraseñas no se guardan en texto plano. Al registrar un usuario se genera un salt con `bcrypt.genSalt()` y con él se calcula el hash con `bcrypt.hash()`. En la tabla `users` se guardan los dos valores: `salt_key` y `password_hash`. El factor de costo se toma de la variable `BCRYPT_SALT_ROUNDS` (por defecto 10).
+
+Para el login la contraseña se compara con `bcrypt.compare()`. Esta lógica está separada del controller, en `utils/password.js` (`hashPassword` y `verifyPassword`).
+
+Las respuestas de la API nunca incluyen `password_hash` ni `salt_key`, porque el modelo `User` los quita en su `toJSON()`.
+
+### JWT
+
+- `jsonwebtoken`: firma el token en el login (`jwt.sign`).
+- `express-jwt`: verifica el token en las rutas protegidas, dentro del middleware `authenticate` (`middlewares/authenticate.js`).
+
+El token solo lleva el id del usuario en `sub`. Se firma con `HS256` y valida `issuer` y `audience`. Expira en **15 minutos** (`JWT_EXPIRES_IN=15m`).
+
+### Endpoints
+
+| Método | Ruta | Descripción |
+|---|---|---|
+| `POST` | `/api/auth/register` | Crea un usuario con

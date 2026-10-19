@@ -1,0 +1,25 @@
+Actividad 4 — Endpoint GET /api/auth/me
+
+Este paquete contiene las versiones corregidas de los archivos que se deben copiar sobre la rama
+feat/jwt-authentication. No contiene el archivo .env ni secretos reales.
+
+1. Abre la carpeta local del repositorio Proyecto-web-sprint0.
+2. En una terminal dentro de esa carpeta ejecuta:
+     git fetch origin
+     git checkout feat/jwt-authentication
+     git pull origin feat/jwt-authentication
+3. Extrae el contenido de este ZIP sobre la raíz del repositorio y acepta reemplazar los archivos.
+4. Copia .env.example a .env y llena los valores locales. No agregues .env a Git.
+5. Ejecuta npm install, npm test y npm run lint.
+6. Revisa los cambios con git status y git diff.
+7. Crea los dos commits y sube la rama:
+
+   git add controllers/auth.js routes/auth.js middlewares/authenticate.js config/sequelize.js test/api.test.js
+   git commit -m "feat: agregar endpoint protegido /api/auth/me"
+
+   git add README.md .env.example
+   git commit -m "docs: documentar autenticacion en README"
+
+   git push origin feat/jwt-authentication
+
+Si el pull indica conflictos, no hagas push hasta resolverlos. No trabajes directamente en main.

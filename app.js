@@ -14,6 +14,7 @@ var inventoryRouter = require('./routes/inventory');
 var customersRouter = require('./routes/customers');
 var ordersRouter = require('./routes/orders');
 var authRouter = require('./routes/auth');
+const i18n = require('./config/i18n');
 
 var app = express();
 
@@ -26,6 +27,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(i18n.init);
 
 app.use('/', indexRouter);
 app.use('/api/users', usersRouter);
@@ -37,6 +39,7 @@ app.use('/api/inventory', inventoryRouter);
 app.use('/api/customers', customersRouter);
 app.use('/api/orders', ordersRouter);
 app.use('/api/auth', authRouter);
+
 
 // 404 controlado para rutas inexistentes.
 app.use(function (req, res, next) {

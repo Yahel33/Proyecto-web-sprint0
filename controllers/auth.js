@@ -41,12 +41,12 @@ async function login(req, res) {
 
     // Mismo mensaje generico si el usuario no existe o la contrasena es incorrecta.
     if (!user || !user.active) {
-      return res.status(401).json({ message: 'Invalid credentials' });
+      return res.status(401).json({ message: req.__('auth.invalidCredentials') });
     }
 
     const passwordOk = await verifyPassword(password, user.password_hash);
     if (!passwordOk) {
-      return res.status(401).json({ message: 'Invalid credentials' });
+      return res.status(401).json({ message: req.__('auth.invalidCredentials') });
     }
 
     const token = jwt.sign(

@@ -29,6 +29,7 @@ var server = http.createServer(app);
  */
 
 sequelize.sync().then(function () {
+  console.log('App conectada a ' + sequelize.config.database + ' (' + (process.env.NODE_ENV || 'development') + ')');
   server.listen(port);
   server.on('error', onError);
   server.on('listening', onListening);

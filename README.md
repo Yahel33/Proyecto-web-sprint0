@@ -32,6 +32,12 @@ pruebas con Jest.
 - Morgan
 - http-errors
 - Pug
+- Sequelize + MySQL
+- Docker
+- bcrypt, jsonwebtoken y express-jwt
+- dotenv
+- config y cross-env
+- i18n
 - ESLint
 - Jest
 - Supertest
@@ -40,6 +46,7 @@ pruebas con Jest.
 
 - Node.js 18 o superior (trae NPM)
 - Git
+- Docker Desktop (para la base de datos MySQL)
 
 ## Instalación
 
@@ -53,25 +60,28 @@ npm install
 
 ## Ejecución
 
-Para levantar el servidor:
+Primero hay que tener la base de datos corriendo (ver la sección **Base de datos**) y el archivo `.env` creado (ver **Variables de entorno**).
 
-```bash
-npm start
-```
-
-Queda corriendo en `http://localhost:3000` y la API en `http://localhost:3000/api`. Para
-desarrollar con recarga automática al guardar cambios:
+Para trabajar en desarrollo, con recarga automática al guardar cambios:
 
 ```bash
 npm run dev
 ```
 
+Para levantarlo en modo producción:
+
+```bash
+npm start
+```
+
+Queda corriendo en `http://localhost:3000` y la API en `http://localhost:3000/api`. Al arrancar se muestra a qué base se conectó y en qué ambiente, por ejemplo `App conectada a stride-co (development)`.
+
 ## Scripts / comandos disponibles
 
 | Comando | Descripción |
 |---|---|
-| `npm start` | Levanta la aplicación (`node ./bin/www`). |
-| `npm run dev` | Levanta la aplicación con Nodemon (recarga automática). |
+| `npm start` | Levanta la aplicación en producción (`NODE_ENV=production`), conectada a `stride_co_prod`. |
+| `npm run dev` | Levanta la aplicación en desarrollo (`NODE_ENV=development`) con Nodemon, conectada a `stride-co`. |
 | `npm test` | Corre las pruebas con Jest. |
 | `npm run lint` | Corre ESLint sobre el código. |
 
@@ -147,7 +157,12 @@ npm run lint
 Proyecto-web-sprint0/
 |-- bin/
 |   `-- www
+|-- config/
+|   |-- default.json
+|   |-- i18n.js
+|   `-- sequelize.js
 |-- controllers/
+|   |-- auth.js
 |   |-- resourceControllerFactory.js
 |   |-- users.js
 |   |-- roles.js
@@ -157,8 +172,21 @@ Proyecto-web-sprint0/
 |   |-- inventory.js
 |   |-- customers.js
 |   `-- orders.js
+|-- locales/
+|   |-- en.json
+|   `-- es.json
+|-- middlewares/
+|   `-- authenticate.js
+|-- models/
+|   |-- documents/
+|   `-- relationals/
+|       |-- index.js
+|       |-- Permission.js
+|       |-- Role.js
+|       `-- User.js
 |-- routes/
 |   |-- apiResourceRoutes.js
+|   |-- auth.js
 |   |-- index.js
 |   |-- users.js
 |   |-- roles.js
@@ -177,7 +205,11 @@ Proyecto-web-sprint0/
 |   `-- layout.pug
 |-- test/
 |   `-- api.test.js
+|-- utils/
+|   `-- password.js
+|-- .env.example
 |-- app.js
+|-- Dockerfile
 |-- eslint.config.js
 |-- package.json
 |-- package-lock.json
@@ -193,15 +225,44 @@ Proyecto-web-sprint0/
 
 ## Base de datos
 
-El proyecto usa MySQL con Sequelize. La conexión está en `config/sequelize.js` con los valores de la clase: base `stride-co`, usuario `root`, contraseña `abcd1234`, `localhost:3306`.
+El proyecto usa MySQL con Sequelize. Los datos de conexión no están escritos en el código: `config/sequelize.js` los toma con la librería `config` según el ambiente.
 
-Para levantar la base con Docker:
+| Ambiente | Archivo | Base |
+|---|---|---|
+| Desarrollo (`npm run dev`) | `config/default.json` | `stride-co` |
+| Producción (`npm start`) | `config/production.json` | `stride_co_prod` |
+
+`config/production.json` no se sube al repositorio (está en `.gitignore`). Para correr en producción hay que crearlo en la máquina con la misma estructura que `default.json`:
+
+```json
+{
+  "MySQL": {
+    "host": "localhost",
+    "port": 3306,
+    "database": "stride_co_prod",
+    "user": "root",
+    "password": "abcd1234"
+  }
+}
+```
+
+Para levantar MySQL con Docker (ya crea la base de desarrollo):
 
 ```bash
 docker run --name stride-mysql -e MYSQL_ROOT_PASSWORD=abcd1234 -e MYSQL_DATABASE=stride-co -p 3306:3306 -d mysql:8
 ```
 
-Al ejecutar `npm start` la tabla `users` se crea sola con `sequelize.sync()`.
+La base de producción se crea aparte, dentro de MySQL:
+
+```bash
+docker exec -ti stride-mysql mysql -u root -p
+```
+
+```sql
+create database stride_co_prod;
+```
+
+Al arrancar la app, la tabla `users` se crea sola en la base que corresponda con `sequelize.sync()`.
 
 ### Prueba rápida
 
@@ -267,20 +328,38 @@ Authorization: Bearer <token>
 
 ### Variables de entorno
 
-Copiar `.env.example` como `.env` y llenar los valores. El `.env` no se sube al repositorio.
+Copiar `.env.example` como `.env` y llenar los valores. El `.env` no se sube al repositorio. Los datos de la base de datos no van aquí, sino en `config/default.json` y `config/production.json`.
 
 ```
 PORT=3000
-
-DB_NAME=stride-co
-DB_USER=root
-DB_PASSWORD=
-DB_HOST=localhost
-DB_PORT=3306
 
 JWT_SECRET=
 JWT_EXPIRES_IN=15m
 JWT_ISSUER=stride-co
 JWT_AUDIENCE=stride-co-api
 BCRYPT_SALT_ROUNDS=10
+```
+
+## Internacionalización (i18n)
+
+Los mensajes de la API se pueden responder en español o inglés con la librería `i18n`. La configuración está en `config/i18n.js` y los textos en `locales/es.json` y `locales/en.json`.
+
+El idioma se elige de cualquiera de estas formas:
+
+- Con el parámetro `?lang=es` en la URL.
+- Con el header `Accept-Language: es`.
+- Con una cookie llamada `lang`.
+
+Si no se indica idioma, responde en inglés. En el código los textos se piden con `req.__()`, por ejemplo `req.__('auth.invalidCredentials')` en el login.
+
+Ejemplo, login con contraseña incorrecta en español:
+
+```bash
+curl -X POST "http://localhost:3000/api/auth/login?lang=es" -H "Content-Type: application/json" -d "{\"email\":\"ana@stride.co\",\"password\":\"malaclave\"}"
+```
+
+Respuesta:
+
+```json
+{ "message": "Credenciales inválidas" }
 ```

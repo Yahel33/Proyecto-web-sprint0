@@ -8,8 +8,8 @@ var mockData = {
     { id: 2, nombre: 'almacen', descripcion: 'Registra entradas y salidas de inventario' }
   ],
   permissions: [
-    { id: 1, clave: 'productos:editar', descripcion: 'Puede crear y editar productos' },
-    { id: 2, clave: 'inventario:mover', descripcion: 'Puede registrar movimientos de inventario' }
+    { id: 1, clave: 'products:update:any', descripcion: 'Puede editar cualquier producto' },
+    { id: 2, clave: 'orders:read:own', descripcion: 'Puede consultar sus propios pedidos' }
   ],
   products: [
     { id: 1, nombre: 'Camiseta blanca', categoria: 'ropa', precio: 249.90 },
@@ -28,8 +28,8 @@ var mockData = {
     { id: 2, nombre: 'Tienda Centro', telefono: '6141111111' }
   ],
   orders: [
-    { id: 1, clienteId: 1, estado: 'pendiente', total: 499.80 },
-    { id: 2, clienteId: 2, estado: 'entregado', total: 899.00 }
+    { id: 1, customerId: 1, userId: 1, estado: 'pendiente', total: 499.80 },
+    { id: 2, customerId: 2, userId: 2, estado: 'entregado', total: 899.00 }
   ]
 };
 
@@ -37,18 +37,24 @@ function getItems(resourceName) {
   return mockData[resourceName] || [];
 }
 
+function findById(resourceName, id) {
+  return getItems(resourceName).find(function(item) {
+    return item.id === Number(id);
+  });
+}
+
 function createResourceController(resourceName) {
   return {
+    findById(id) {
+      return findById(resourceName, id);
+    },
+
     list(_req, res) {
-      res.json({
-        message: `Listado de ${resourceName}`,
-        data: getItems(resourceName)
-      });
+      res.json({ message: `Listado de ${resourceName}`, data: getItems(resourceName) });
     },
 
     getById(req, res) {
       var id = Number(req.params.id);
-
       if (!Number.isInteger(id) || id <= 0) {
         return res.status(400).json({
           message: `Id invalido para ${resourceName}`,
@@ -56,21 +62,14 @@ function createResourceController(resourceName) {
         });
       }
 
-      var item = getItems(resourceName).find(function(mockItem) {
-        return mockItem.id === id;
-      });
-
+      var item = findById(resourceName, id);
       if (!item) {
         return res.status(404).json({
           message: `${resourceName} no encontrado`,
           error: 'No existe un registro de prueba con ese id'
         });
       }
-
-      return res.json({
-        message: `Detalle de ${resourceName}`,
-        data: item
-      });
+      return res.json({ message: `Detalle de ${resourceName}`, data: item });
     },
 
     create(req, res) {
@@ -80,64 +79,36 @@ function createResourceController(resourceName) {
           error: 'El cuerpo de la solicitud es obligatorio'
         });
       }
-
-      return res.status(201).json({
-        message: `${resourceName} creado`,
-        data: {
-          id: 3,
-          ...req.body
-        }
-      });
+      return res.status(201).json({ message: `${resourceName} creado`, data: { id: 3, ...req.body } });
     },
 
     update(req, res) {
       var id = Number(req.params.id);
-
       if (!Number.isInteger(id) || id <= 0) {
         return res.status(400).json({
           message: `Id invalido para ${resourceName}`,
           error: 'El parametro id debe ser un numero entero positivo'
         });
       }
-
       if (!req.body || Object.keys(req.body).length === 0) {
         return res.status(400).json({
           message: `Datos incompletos para ${resourceName}`,
           error: 'El cuerpo de la solicitud es obligatorio'
         });
       }
-
-      var currentItem = getItems(resourceName).find(function(mockItem) {
-        return mockItem.id === id;
-      }) || {};
-
-      return res.json({
-        message: `${resourceName} actualizado`,
-        data: {
-          ...currentItem,
-          id,
-          ...req.body
-        }
-      });
+      var currentItem = findById(resourceName, id) || {};
+      return res.json({ message: `${resourceName} actualizado`, data: { ...currentItem, id, ...req.body } });
     },
 
     remove(req, res) {
       var id = Number(req.params.id);
-
       if (!Number.isInteger(id) || id <= 0) {
         return res.status(400).json({
           message: `Id invalido para ${resourceName}`,
           error: 'El parametro id debe ser un numero entero positivo'
         });
       }
-
-      return res.json({
-        message: `${resourceName} eliminado`,
-        data: {
-          id,
-          eliminado: true
-        }
-      });
+      return res.json({ message: `${resourceName} eliminado`, data: { id, eliminado: true } });
     }
   };
 }

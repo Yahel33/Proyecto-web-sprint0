@@ -1,9 +1,45 @@
-process.env.JWT_SECRET = process.env.JWT_SECRET || 'test-secret';
-process.env.JWT_ISSUER = process.env.JWT_ISSUER || 'stride-co';
-process.env.JWT_AUDIENCE = process.env.JWT_AUDIENCE || 'stride-co-api';
+process.env.JWT_SECRET = 'test-secret';
+process.env.JWT_ISSUER = 'stride-co';
+process.env.JWT_AUDIENCE = 'stride-co-api';
 
+jest.mock('../models/relationals', () => ({
+  User: { findByPk: jest.fn() },
+  Role: { findByPk: jest.fn() },
+  Permission: {}
+}));
+
+var jwt = require('jsonwebtoken');
 var request = require('supertest');
 var app = require('../app');
+var { User, Role } = require('../models/relationals');
+
+var adminToken = jwt.sign(
+  { sub: '1' },
+  process.env.JWT_SECRET,
+  {
+    expiresIn: '1h',
+    issuer: process.env.JWT_ISSUER,
+    audience: process.env.JWT_AUDIENCE,
+    algorithm: 'HS256'
+  }
+);
+
+function withAdminToken(requestBuilder) {
+  return requestBuilder.set('Authorization', `Bearer ${adminToken}`);
+}
+
+beforeEach(function() {
+  User.findByPk.mockResolvedValue({ id: 1, roleId: 1, active: true });
+  Role.findByPk.mockResolvedValue({
+    id: 1,
+    name: 'admin',
+    permissions: [
+      { key: 'products:read:any' },
+      { key: 'orders:read:any' },
+      { key: 'orders:create:any' }
+    ]
+  });
+});
 
 var resources = [
   'users',
@@ -18,8 +54,7 @@ var resources = [
 
 describe('Recursos de la API de Stride & Co.', function() {
   test.each(resources)('GET /api/%s responde con datos de prueba', async function(resource) {
-    var response = await request(app)
-      .get(`/api/${resource}`)
+    var response = await withAdminToken(request(app).get(`/api/${resource}`))
       .expect(200);
 
     expect(response.body).toHaveProperty('message', `Listado de ${resource}`);
@@ -27,8 +62,7 @@ describe('Recursos de la API de Stride & Co.', function() {
   });
 
   test('GET /api/products/:id responde con un registro de prueba', async function() {
-    var response = await request(app)
-      .get('/api/products/1')
+    var response = await withAdminToken(request(app).get('/api/products/1'))
       .expect(200);
 
     expect(response.body).toHaveProperty('message', 'Detalle de products');
@@ -37,24 +71,21 @@ describe('Recursos de la API de Stride & Co.', function() {
   });
 
   test('GET /api/products/:id valida parametros incorrectos', async function() {
-    var response = await request(app)
-      .get('/api/products/abc')
+    var response = await withAdminToken(request(app).get('/api/products/abc'))
       .expect(400);
 
     expect(response.body).toHaveProperty('message', 'Id invalido para products');
   });
 
   test('GET /api/products/:id maneja recursos inexistentes', async function() {
-    var response = await request(app)
-      .get('/api/products/99')
+    var response = await withAdminToken(request(app).get('/api/products/99'))
       .expect(404);
 
     expect(response.body).toHaveProperty('message', 'products no encontrado');
   });
 
   test('POST /api/orders valida cuerpos vacios', async function() {
-    var response = await request(app)
-      .post('/api/orders')
+    var response = await withAdminToken(request(app).post('/api/orders'))
       .send({})
       .expect(400);
 
@@ -62,8 +93,7 @@ describe('Recursos de la API de Stride & Co.', function() {
   });
 
   test('POST /api/orders responde con una orden de prueba', async function() {
-    var response = await request(app)
-      .post('/api/orders')
+    var response = await withAdminToken(request(app).post('/api/orders'))
       .send({ customerId: 1 })
       .expect(201);
 

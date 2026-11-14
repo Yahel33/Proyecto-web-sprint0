@@ -10,7 +10,7 @@ var http = require('http');
 var config = require('config');
 var sequelize = require('../config/sequelize');
 var { connectMongo } = require('../config/mongoose');
-require('../models/sql/User');
+require('../models/sql');
 
 /**
  * Get port from environment and store in Express.

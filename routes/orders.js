@@ -3,9 +3,9 @@ var controller = require('../controllers/orders');
 var authenticate = require('../middlewares/authenticate');
 var { authorize } = require('../middlewares/authorize');
 
-function orderOwnerId(req) {
-  var order = controller.findById(req.params.id);
-  return order && order.userId;
+async function orderOwnerId(req) {
+  var order = await controller.findById(req.params.id);
+  return order && order.salesPersonId;
 }
 
 module.exports = createApiResourceRoutes(controller, {

@@ -1,3 +1,4 @@
-var createResourceController = require('./resourceControllerFactory');
+const createMongoResourceController = require('./mongoResourceController');
+const { Order } = require('../models/mongo');
 
-module.exports = createResourceController('orders');
+module.exports = createMongoResourceController(Order, { populate: ['customerId'] });

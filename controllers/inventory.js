@@ -1,3 +1,6 @@
-var createResourceController = require('./resourceControllerFactory');
+const createSqlResourceController = require('./sqlResourceController');
+const { Inventory } = require('../models/sql');
 
-module.exports = createResourceController('inventory');
+module.exports = createSqlResourceController(Inventory, {
+  include: [{ association: 'variant' }]
+});

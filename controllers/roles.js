@@ -1,3 +1,6 @@
-var createResourceController = require('./resourceControllerFactory');
+const createSqlResourceController = require('./sqlResourceController');
+const { Role } = require('../models/sql');
 
-module.exports = createResourceController('roles');
+module.exports = createSqlResourceController(Role, {
+  include: [{ association: 'permissions' }]
+});

@@ -1,3 +1,4 @@
-var createResourceController = require('./resourceControllerFactory');
+const createSqlResourceController = require('./sqlResourceController');
+const { Permission } = require('../models/sql');
 
-module.exports = createResourceController('permissions');
+module.exports = createSqlResourceController(Permission);

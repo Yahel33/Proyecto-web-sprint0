@@ -1,3 +1,4 @@
-var createResourceController = require('./resourceControllerFactory');
+const createMongoResourceController = require('./mongoResourceController');
+const { Customer } = require('../models/mongo');
 
-module.exports = createResourceController('customers');
+module.exports = createMongoResourceController(Customer);

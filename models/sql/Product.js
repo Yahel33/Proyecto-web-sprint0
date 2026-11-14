@@ -1,15 +1,19 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../config/sequelize');
 
-const ProductVariant = sequelize.define('ProductVariant', {
-  productId: { type: DataTypes.INTEGER, allowNull: false },
-  sku: { type: DataTypes.STRING(50), allowNull: false, unique: true },
-  size: { type: DataTypes.STRING(50), allowNull: true },
-  color: { type: DataTypes.STRING(50), allowNull: true },
+const Product = sequelize.define('Product', {
+  name: { type: DataTypes.STRING(150), allowNull: false },
+  description: { type: DataTypes.TEXT, allowNull: true },
+  brand: { type: DataTypes.STRING(100), allowNull: true },
+  price: {
+    type: DataTypes.DECIMAL(10, 2),
+    allowNull: false,
+    validate: { min: 0 }
+  },
   active: { type: DataTypes.BOOLEAN, defaultValue: true }
 }, {
-  tableName: 'product_variants',
+  tableName: 'products',
   timestamps: true
 });
 
-module.exports = ProductVariant;
+module.exports = Product;

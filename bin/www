@@ -11,6 +11,7 @@ var config = require('config');
 var sequelize = require('../config/sequelize');
 var { connectMongo } = require('../config/mongoose');
 require('../models/sql');
+require('../models/mongo');
 
 /**
  * Get port from environment and store in Express.

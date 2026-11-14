@@ -1,16 +1,16 @@
 const { Sequelize } = require('sequelize');
 const config = require('config');
 
-const mysqlConfig = config.get('MySQL');
+const sqlConfig = config.get('database.sql');
 
 const sequelize = new Sequelize(
-  mysqlConfig.database,
-  mysqlConfig.user,
-  mysqlConfig.password,
+  sqlConfig.name,
+  sqlConfig.user,
+  sqlConfig.password,
   {
-    host: mysqlConfig.host,
-    port: mysqlConfig.port,
-    dialect: 'mysql',
+    host: sqlConfig.host,
+    port: sqlConfig.port,
+    dialect: sqlConfig.dialect,
     logging: false,
     define: {
       underscored: true

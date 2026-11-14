@@ -1,6 +1,7 @@
 const { User } = require('../models/relationals');
 const { hashPassword, verifyPassword } = require('../utils/password');
 const jwt = require('jsonwebtoken');
+const config = require('config');
 
 // Crea un usuario guardando la contraseña de forma segura (hash + salt).
 async function register(req, res) {
@@ -51,11 +52,11 @@ async function login(req, res) {
 
     const token = jwt.sign(
       { sub: String(user.id) },
-      process.env.JWT_SECRET,
+      config.get('jwt.secret'),
       {
-        expiresIn: process.env.JWT_EXPIRES_IN,
-        issuer: process.env.JWT_ISSUER,
-        audience: process.env.JWT_AUDIENCE,
+        expiresIn: config.get('jwt.expiresIn'),
+        issuer: config.get('jwt.issuer'),
+        audience: config.get('jwt.audience'),
         algorithm: 'HS256'
       }
     );

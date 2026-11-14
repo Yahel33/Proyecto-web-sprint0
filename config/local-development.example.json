@@ -1,0 +1,10 @@
+{
+  "jwt": {
+    "secret": ""
+  },
+  "database": {
+    "sql": {
+      "password": ""
+    }
+  }
+}

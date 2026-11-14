@@ -1,9 +1,22 @@
 {
-  "MySQL": {
-    "host": "localhost",
-    "port": 3306,
-    "database": "stride-co",
-    "user": "root",
-    "password": "abcd1234"
+  "server": {
+    "port": 3000
+  },
+  "database": {
+    "sql": {
+      "dialect": "mysql",
+      "host": "localhost",
+      "port": 3306,
+      "name": "stride-co",
+      "user": "root"
+    }
+  },
+  "jwt": {
+    "expiresIn": "15m",
+    "issuer": "stride-co",
+    "audience": "stride-co-api"
+  },
+  "bcrypt": {
+    "saltRounds": 10
   }
 }

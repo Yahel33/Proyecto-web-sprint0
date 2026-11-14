@@ -1,0 +1,13 @@
+{
+  "jwt": {
+    "secret": "test-secret"
+  },
+  "bcrypt": {
+    "saltRounds": 4
+  },
+  "database": {
+    "sql": {
+      "password": ""
+    }
+  }
+}

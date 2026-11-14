@@ -1,7 +1,3 @@
-process.env.JWT_SECRET = 'test-secret';
-process.env.JWT_ISSUER = 'stride-co';
-process.env.JWT_AUDIENCE = 'stride-co-api';
-
 jest.mock('../models/relationals', () => ({
   User: { findByPk: jest.fn() },
   Role: { findByPk: jest.fn() },
@@ -12,14 +8,15 @@ var jwt = require('jsonwebtoken');
 var request = require('supertest');
 var app = require('../app');
 var { User, Role } = require('../models/relationals');
+var config = require('config');
 
 var adminToken = jwt.sign(
   { sub: '1' },
-  process.env.JWT_SECRET,
+  config.get('jwt.secret'),
   {
     expiresIn: '1h',
-    issuer: process.env.JWT_ISSUER,
-    audience: process.env.JWT_AUDIENCE,
+    issuer: config.get('jwt.issuer'),
+    audience: config.get('jwt.audience'),
     algorithm: 'HS256'
   }
 );

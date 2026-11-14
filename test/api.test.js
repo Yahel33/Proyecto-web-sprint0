@@ -1,4 +1,4 @@
-jest.mock('../models/relationals', () => ({
+jest.mock('../models/sql', () => ({
   User: { findByPk: jest.fn() },
   Role: { findByPk: jest.fn() },
   Permission: {}
@@ -7,7 +7,7 @@ jest.mock('../models/relationals', () => ({
 var jwt = require('jsonwebtoken');
 var request = require('supertest');
 var app = require('../app');
-var { User, Role } = require('../models/relationals');
+var { User, Role } = require('../models/sql');
 var config = require('config');
 
 var adminToken = jwt.sign(

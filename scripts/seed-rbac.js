@@ -1,4 +1,4 @@
-const { sequelize, Role, Permission } = require('../models/relationals');
+const { sequelize, Role, Permission } = require('../models/sql');
 
 const rolePermissions = {
   admin: [

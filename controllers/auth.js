@@ -1,4 +1,4 @@
-const { User } = require('../models/relationals');
+const { User } = require('../models/sql');
 const { hashPassword, verifyPassword } = require('../utils/password');
 const jwt = require('jsonwebtoken');
 const config = require('config');

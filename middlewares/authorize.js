@@ -1,5 +1,5 @@
 const { AccessControl } = require('accesscontrol');
-const { Role, Permission } = require('../models/relationals');
+const { Role, Permission } = require('../models/sql');
 
 const validPossessions = new Set(['own', 'any']);
 const validActions = new Set(['create', 'read', 'update', 'delete']);

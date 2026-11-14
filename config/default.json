@@ -4,11 +4,11 @@
   },
   "database": {
     "sql": {
-      "dialect": "mysql",
+      "dialect": "postgres",
       "host": "localhost",
-      "port": 3306,
+      "port": 5432,
       "name": "stride-co",
-      "user": "root"
+      "user": "postgres"
     }
   },
   "jwt": {

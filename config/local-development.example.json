@@ -5,6 +5,9 @@
   "database": {
     "sql": {
       "password": ""
+    },
+    "mongo": {
+      "uri": ""
     }
   }
 }

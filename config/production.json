@@ -1,7 +1,8 @@
 {
   "database": {
     "sql": {
-      "name": "stride_co_prod"
+      "name": "stride_co_prod",
+      "ssl": true
     }
   }
 }

@@ -76,12 +76,12 @@ describe('Autorizacion RBAC', function () {
   test('ADMIN puede eliminar cualquier producto', async function () {
     sql.Product.findByPk.mockResolvedValue({ id: 1, destroy: jest.fn().mockResolvedValue() });
     var res = await requestAs('delete', '/api/products/1', 1).expect(200);
-    expect(res.body).toHaveProperty('message', 'eliminado');
+    expect(res.body).toHaveProperty('message', 'Registro eliminado');
   });
 
   test('SALES no puede eliminar productos', async function () {
     var res = await requestAs('delete', '/api/products/1', 2).expect(403);
-    expect(res.body).toHaveProperty('message', 'Forbidden');
+    expect(res.body).toHaveProperty('message', 'Acceso denegado');
   });
 
   test('un usuario puede consultar una orden propia', async function () {
@@ -93,11 +93,11 @@ describe('Autorizacion RBAC', function () {
   test('un usuario no puede consultar la orden de otra persona', async function () {
     mongo.Order.findById.mockReturnValue(fakeQuery({ _id: '2', salesPersonId: 2 }));
     var res = await requestAs('get', '/api/orders/2', 3).expect(403);
-    expect(res.body).toHaveProperty('message', 'Forbidden');
+    expect(res.body).toHaveProperty('message', 'Acceso denegado');
   });
 
   test('un usuario sin orders:read:any no puede consultar todas las ordenes', async function () {
     var res = await requestAs('get', '/api/orders', 3).expect(403);
-    expect(res.body).toHaveProperty('message', 'Forbidden');
+    expect(res.body).toHaveProperty('message', 'Acceso denegado');
   });
 });

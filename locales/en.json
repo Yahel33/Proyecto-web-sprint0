@@ -1,5 +1,19 @@
 {
   "auth": {
     "invalidCredentials": "Invalid credentials"
+  },
+  "common": {
+    "list": "List retrieved",
+    "detail": "Record retrieved",
+    "created": "Record created",
+    "updated": "Record updated",
+    "deleted": "Record deleted",
+    "notFound": "Record not found",
+    "invalidId": "Invalid id",
+    "invalidData": "Invalid data",
+    "routeNotFound": "Route not found",
+    "serverError": "Server error",
+    "unauthorized": "Unauthorized",
+    "forbidden": "Forbidden"
   }
 }

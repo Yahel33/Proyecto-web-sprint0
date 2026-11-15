@@ -1,5 +1,19 @@
 {
   "auth": {
-    "invalidCredentials": "Credenciales inválidas"
+    "invalidCredentials": "Credenciales invalidas"
+  },
+  "common": {
+    "list": "Listado obtenido",
+    "detail": "Registro obtenido",
+    "created": "Registro creado",
+    "updated": "Registro actualizado",
+    "deleted": "Registro eliminado",
+    "notFound": "Registro no encontrado",
+    "invalidId": "Id invalido",
+    "invalidData": "Datos invalidos",
+    "routeNotFound": "Ruta no encontrada",
+    "serverError": "Error del servidor",
+    "unauthorized": "No autorizado",
+    "forbidden": "Acceso denegado"
   }
 }

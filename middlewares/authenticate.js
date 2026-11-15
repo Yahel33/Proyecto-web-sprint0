@@ -18,7 +18,7 @@ function authenticate(req, res, next) {
     try {
       const user = await User.findByPk(req.auth.sub);
       if (!user || !user.active) {
-        return res.status(401).json({ message: 'Unauthorized' });
+        return res.status(401).json({ message: req.__('common.unauthorized') });
       }
 
       req.user = user;

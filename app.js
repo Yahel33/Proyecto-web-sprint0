@@ -50,7 +50,7 @@ app.use(function (req, res, next) {
 app.use(function (err, req, res, next) {
   if (err.name === 'UnauthorizedError') {
     return res.status(401).json({
-      message: 'Unauthorized',
+      message: req.__('common.unauthorized'),
       error: err.message
     });
   }
@@ -60,7 +60,7 @@ app.use(function (err, req, res, next) {
 app.use(function (err, req, res, _next) {
   if (req.path.startsWith('/api')) {
     return res.status(err.status || 500).json({
-      message: err.status === 404 ? 'Ruta no encontrada' : 'Error del servidor',
+      message: req.__(err.status === 404 ? 'common.routeNotFound' : 'common.serverError'),
       error: err.message
     });
   }

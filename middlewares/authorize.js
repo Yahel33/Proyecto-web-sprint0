@@ -46,14 +46,14 @@ function authorize(resource, action, possession, options = {}) {
   return async function authorizeRequest(req, res, next) {
     try {
       if (!req.user || !req.user.roleId) {
-        return res.status(403).json({ message: 'Forbidden' });
+        return res.status(403).json({ message: req.__('common.forbidden') });
       }
 
       const authorization = await accessControlForRole(req.user.roleId);
-      if (!authorization) return res.status(403).json({ message: 'Forbidden' });
+      if (!authorization) return res.status(403).json({ message: req.__('common.forbidden') });
 
       const permission = authorization.ac.can(authorization.role.name)[accessMethod(action, possession)](resource);
-      if (!permission.granted) return res.status(403).json({ message: 'Forbidden' });
+      if (!permission.granted) return res.status(403).json({ message: req.__('common.forbidden') });
 
       if (possession === 'own') {
         const ownerId = options.getOwnerId
@@ -61,7 +61,7 @@ function authorize(resource, action, possession, options = {}) {
           : req.resourceOwnerId;
 
         if (ownerId === undefined || ownerId === null || String(ownerId) !== String(req.user.id)) {
-          return res.status(403).json({ message: 'Forbidden' });
+          return res.status(403).json({ message: req.__('common.forbidden') });
         }
       }
 

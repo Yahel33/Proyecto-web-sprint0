@@ -70,7 +70,7 @@ describe('Recursos de la API de Stride & Co.', function () {
   test('GET /api/users lista usuarios (SQL)', async function () {
     sql.User.findAll.mockResolvedValue([{ id: 1, firstName: 'Ana' }]);
     var res = await withAdminToken(request(app).get('/api/users')).expect(200);
-    expect(res.body).toHaveProperty('message', 'ok');
+    expect(res.body).toHaveProperty('message', 'Listado obtenido');
     expect(Array.isArray(res.body.data)).toBe(true);
   });
 
@@ -88,7 +88,7 @@ describe('Recursos de la API de Stride & Co.', function () {
   test('GET /api/products/:id maneja inexistentes', async function () {
     sql.Product.findByPk.mockResolvedValue(null);
     var res = await withAdminToken(request(app).get('/api/products/99')).expect(404);
-    expect(res.body).toHaveProperty('message', 'No encontrado');
+    expect(res.body).toHaveProperty('message', 'Registro no encontrado');
   });
 
   test('GET /api/products/:id devuelve el producto', async function () {
@@ -102,7 +102,7 @@ describe('Recursos de la API de Stride & Co.', function () {
     var res = await withAdminToken(request(app).post('/api/products'))
       .send({ name: 'Nuevo', price: 10 })
       .expect(201);
-    expect(res.body).toHaveProperty('message', 'creado');
+    expect(res.body).toHaveProperty('message', 'Registro creado');
   });
 
   test('POST /api/products rechaza datos invalidos', async function () {
@@ -126,7 +126,7 @@ describe('Recursos de la API de Stride & Co.', function () {
     var res = await withAdminToken(request(app).post('/api/customers'))
   .send({ userId: 1, email: 'a@b.com' })
   .expect(201);
-    expect(res.body).toHaveProperty('message', 'creado');
+    expect(res.body).toHaveProperty('message', 'Registro creado');
   });
 
   test('las rutas desconocidas devuelven un 404 controlado', async function () {

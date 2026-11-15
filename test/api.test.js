@@ -50,11 +50,14 @@ beforeEach(function () {
     id: 1,
     name: 'admin',
     permissions: [
-      { key: 'products:read:any' },
-      { key: 'products:create:any' },
-      { key: 'orders:read:any' },
-      { key: 'orders:create:any' }
-    ]
+  { key: 'products:read:any' },
+  { key: 'products:create:any' },
+  { key: 'orders:read:any' },
+  { key: 'orders:create:any' },
+  { key: 'users:read:any' },
+  { key: 'customers:read:any' },
+  { key: 'customers:create:any' }
+]
   });
 });
 
@@ -66,7 +69,7 @@ describe('Recursos de la API de Stride & Co.', function () {
 
   test('GET /api/users lista usuarios (SQL)', async function () {
     sql.User.findAll.mockResolvedValue([{ id: 1, firstName: 'Ana' }]);
-    var res = await request(app).get('/api/users').expect(200);
+    var res = await withAdminToken(request(app).get('/api/users')).expect(200);
     expect(res.body).toHaveProperty('message', 'ok');
     expect(Array.isArray(res.body.data)).toBe(true);
   });
@@ -114,15 +117,15 @@ describe('Recursos de la API de Stride & Co.', function () {
 
   test('GET /api/customers lista clientes (Mongo)', async function () {
     mongo.Customer.find.mockReturnValue(fakeQuery([{ email: 'a@b.com' }]));
-    var res = await request(app).get('/api/customers').expect(200);
+    var res = await withAdminToken(request(app).get('/api/customers')).expect(200);
     expect(Array.isArray(res.body.data)).toBe(true);
   });
 
   test('POST /api/customers crea un cliente (Mongo)', async function () {
     mongo.Customer.create.mockResolvedValue({ _id: 'abc', email: 'a@b.com' });
-    var res = await request(app).post('/api/customers')
-      .send({ userId: 1, email: 'a@b.com' })
-      .expect(201);
+    var res = await withAdminToken(request(app).post('/api/customers'))
+  .send({ userId: 1, email: 'a@b.com' })
+  .expect(201);
     expect(res.body).toHaveProperty('message', 'creado');
   });
 

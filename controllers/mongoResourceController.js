@@ -8,7 +8,7 @@ function createMongoResourceController(Model, options = {}) {
 
   return {
     async findById(id) {
-      try { return await Model.findById(id); } catch (err) { return null; }
+      try { return await Model.findById(id); } catch { return null; }
     },
 
     async list(req, res, next) {

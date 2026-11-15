@@ -1,5 +1,8 @@
 {
   "server": {
     "port": "PORT"
+  },
+  "e2e": {
+    "baseUrl": "E2E_BASE_URL"
   }
 }

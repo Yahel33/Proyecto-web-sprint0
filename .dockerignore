@@ -5,3 +5,4 @@ npm-debug.log
 .env
 config/local*.json
 !config/local*.example.json
+local-production.json

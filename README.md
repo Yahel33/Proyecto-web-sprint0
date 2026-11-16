@@ -215,8 +215,8 @@ Las suites E2E cubren health check, autenticacion, RBAC, los cinco recursos rela
 | --- | --- |
 | URL publica | `https://stride-co-api-jxd0.onrender.com` |
 | Health Check | `GET /health` |
-| Render PostgreSQL | Plan gratuito (caduca a los 30 dias). Region y fecha de creacion: _por confirmar con el responsable del despliegue_. |
-| MongoDB Atlas | Cluster M0 gratuito; Network Access abierto para Render. Proveedor y region: _por confirmar con el responsable del despliegue_. |
+| Render PostgreSQL | Plan gratuito (caduca a los 30 dias). Region: Oregon (US West). Creada el 15/11/2026. |
+| MongoDB Atlas | Cluster M0 gratuito. Proveedor: AWS, region Oregon (us-west-2). Network Access abierto para Render (0.0.0.0/0). |
 | Secretos | Se entregan a Render como Secret File `local-production.json`; no se publican valores reales. |
 
 Usuarios de demostracion creados por el seed (datos ficticios):

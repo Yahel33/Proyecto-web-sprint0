@@ -1,6 +1,11 @@
 {
   "auth": {
-    "invalidCredentials": "Invalid credentials"
+    "invalidCredentials": "Invalid credentials",
+    "credentialsRequired": "Email and password are required",
+    "loginSuccessful": "Login successful",
+    "userCreated": "User created",
+    "errorCreatingUser": "Error creating user",
+    "errorDuringLogin": "Error during login"
   },
   "common": {
     "list": "List retrieved",

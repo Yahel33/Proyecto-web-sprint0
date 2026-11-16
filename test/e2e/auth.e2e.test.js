@@ -12,7 +12,7 @@ describe('E2E Autenticacion (/api/auth/login)', () => {
       });
 
     expect(res.status).toBe(200);
-    expect(res.body).toHaveProperty('message', 'Login successful');
+    expect(res.body).toHaveProperty('message', es.auth.loginSuccessful);
     expect(res.body).toHaveProperty('token');
     expect(typeof res.body.token).toBe('string');
     expect(res.body.token.trim().length).toBeGreaterThan(0);
@@ -53,7 +53,7 @@ describe('E2E Autenticacion (/api/auth/login)', () => {
 
     expect(resEmpty.status).toBe(400);
     expect(resEmpty.body).toEqual({
-      message: 'Email and password are required'
+      message: es.auth.credentialsRequired
     });
     expect(resEmpty.body.token).toBeUndefined();
 
@@ -63,7 +63,7 @@ describe('E2E Autenticacion (/api/auth/login)', () => {
 
     expect(resNoPassword.status).toBe(400);
     expect(resNoPassword.body).toEqual({
-      message: 'Email and password are required'
+      message: es.auth.credentialsRequired
     });
     expect(resNoPassword.body.token).toBeUndefined();
 
@@ -73,7 +73,7 @@ describe('E2E Autenticacion (/api/auth/login)', () => {
 
     expect(resNoEmail.status).toBe(400);
     expect(resNoEmail.body).toEqual({
-      message: 'Email and password are required'
+      message: es.auth.credentialsRequired
     });
     expect(resNoEmail.body.token).toBeUndefined();
   });

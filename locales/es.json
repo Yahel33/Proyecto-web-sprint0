@@ -1,6 +1,11 @@
 {
   "auth": {
-    "invalidCredentials": "Credenciales invalidas"
+    "invalidCredentials": "Credenciales invalidas",
+    "credentialsRequired": "El email y la contrasena son obligatorios",
+    "loginSuccessful": "Inicio de sesion exitoso",
+    "userCreated": "Usuario creado",
+    "errorCreatingUser": "Error al crear el usuario",
+    "errorDuringLogin": "Error al iniciar sesion"
   },
   "common": {
     "list": "Listado obtenido",

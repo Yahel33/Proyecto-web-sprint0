@@ -9,7 +9,7 @@ async function register(req, res) {
     const { firstName, lastName, email, roleId, password } = req.body;
 
     if (!email || !password) {
-      return res.status(400).json({ message: 'Email and password are required' });
+      return res.status(400).json({ message: req.__('auth.credentialsRequired') });
     }
 
     const { password_hash, salt_key } = await hashPassword(password);
@@ -23,9 +23,9 @@ async function register(req, res) {
       salt_key
     });
 
-    res.status(201).json({ message: 'User created', data: user });
+    res.status(201).json({ message: req.__('auth.userCreated'), data: user });
   } catch (err) {
-    res.status(500).json({ message: 'Error creating user', error: err.message });
+    res.status(500).json({ message: req.__('auth.errorCreatingUser'), error: err.message });
   }
 }
 
@@ -35,7 +35,7 @@ async function login(req, res) {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      return res.status(400).json({ message: 'Email and password are required' });
+      return res.status(400).json({ message: req.__('auth.credentialsRequired') });
     }
 
     const user = await User.findOne({ where: { email } });
@@ -61,9 +61,9 @@ async function login(req, res) {
       }
     );
 
-    res.status(200).json({ message: 'Login successful', token });
+    res.status(200).json({ message: req.__('auth.loginSuccessful'), token });
   } catch (err) {
-    res.status(500).json({ message: 'Error during login', error: err.message });
+    res.status(500).json({ message: req.__('auth.errorDuringLogin'), error: err.message });
   }
 }
 

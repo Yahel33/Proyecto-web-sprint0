@@ -1,8 +1,33 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background: #f8f9fa;
 }
 
-a {
-  color: #00B7FF;
+.header {
+  background: #111;
+}
+
+.header a {
+  color: white;
+  text-decoration: none;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.hero {
+  background: #14301f;
+  color: white;
+  padding: 80px 0;
+}
+
+.hero h1 {
+  font-size: 48px;
+  font-weight: bold;
+}
+
+.footer {
+  background: #111;
+  color: white;
 }

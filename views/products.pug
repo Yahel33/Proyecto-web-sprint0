@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  .container.py-5
+    h1.mb-4 Catálogo
+    table.table
+      thead
+        tr
+          th Producto
+          th Descripción
+          th Marca
+          th Precio
+      tbody
+        each product in products
+          tr
+            td= product.name
+            td= product.description
+            td= product.brand
+            td $#{product.price}

@@ -1,5 +1,24 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  section.hero
+    .container
+      h1 Encuentra tu siguiente paso.
+      p Tenis urbanos, deportivos y esenciales para moverte a tu ritmo.
+      a.btn.btn-success(href='/products')
+        | Ver productos
+        i.bi.bi-arrow-right.ms-2
+
+  section.container.py-5
+    h2.mb-4 Destacados
+    .row
+      each product in products
+        .col-md-3.mb-4
+          .card.h-100
+            .card-body
+              h5.card-title= product.name
+              p.card-text= product.description
+              p.text-muted= product.brand
+              strong $#{product.price}
+      else
+        p No hay productos por el momento.

@@ -28,6 +28,7 @@ describe('E2E Productos', () => {
         name: `Producto E2E ${Date.now()}`,
         description: 'Producto temporal para pruebas E2E',
         brand: 'Stride',
+        category: 'Running',
         price: 199.99
       });
 

@@ -41,6 +41,7 @@ describe('E2E Variantes e inventario', () => {
       .send({
         name: `Producto variante E2E ${runId}`,
         description: 'Producto temporal para variante e inventario',
+        category: 'Running',
         price: 300
       });
 

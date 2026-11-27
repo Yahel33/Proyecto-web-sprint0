@@ -74,14 +74,80 @@ async function seed() {
     userByEmail[data.email] = user;
   }
 
-  // Catalogo en Postgres
-  const camiseta = await Product.create({ name: 'Camiseta blanca', description: 'Camiseta de algodon', brand: 'Stride', price: 249.90 });
-  const camisetaVariant = await ProductVariant.create({ productId: camiseta.id, sku: 'CAM-BLA-M', size: 'M', color: 'blanco' });
-  await Inventory.create({ variantId: camisetaVariant.id, stock: 20, minStock: 5, location: 'almacen principal' });
+  // Catalogo en Postgres, igual al del prototipo stride_co_mockup.html
+  const catalog = [
+    {
+      name: 'Stride Runner X',
+      category: 'Running',
+      brand: 'Stride-Co',
+      price: 1899,
+      description: 'Ligereza y amortiguacion para tus kilometros diarios.',
+      variants: [
+        { sku: 'RUN-X-BLK-26', size: '26', color: 'Negro', stock: 20, reserved: 2 },
+        { sku: 'RUN-X-BLK-27', size: '27', color: 'Negro', stock: 13, reserved: 0 }
+      ]
+    },
+    {
+      name: 'Street Motion',
+      category: 'Urbanos',
+      brand: 'Stride-Co',
+      price: 1499,
+      description: 'Silueta urbana para uso diario.',
+      variants: [
+        { sku: 'STM-WHT-26', size: '26', color: 'Blanco', stock: 24, reserved: 1 },
+        { sku: 'STM-WHT-27', size: '27', color: 'Blanco', stock: 17, reserved: 0 }
+      ]
+    },
+    {
+      name: 'Velocity Pro',
+      category: 'Training',
+      brand: 'Stride-Co',
+      price: 2199,
+      description: 'Estabilidad y agarre en cada entrenamiento.',
+      variants: [
+        { sku: 'VEL-BLU-27', size: '27', color: 'Azul', stock: 8, reserved: 0 }
+      ]
+    },
+    {
+      name: 'Everyday Lite',
+      category: 'Urbanos',
+      brand: 'Stride-Co',
+      price: 1299,
+      description: 'Comodidad sencilla para todos los dias.',
+      variants: [
+        { sku: 'EDL-GRY-26', size: '26', color: 'Gris', stock: 31, reserved: 0 }
+      ]
+    }
+  ];
 
-  const tenis = await Product.create({ name: 'Tenis negros', description: 'Tenis deportivos', brand: 'Stride', price: 899.00 });
-  const tenisVariant = await ProductVariant.create({ productId: tenis.id, sku: 'TEN-NEG-27', size: '27', color: 'negro' });
-  await Inventory.create({ variantId: tenisVariant.id, stock: 8, minStock: 6, location: 'almacen principal' });
+  const productByName = {};
+  for (const item of catalog) {
+    const product = await Product.create({
+      name: item.name,
+      category: item.category,
+      brand: item.brand,
+      price: item.price,
+      description: item.description
+    });
+    productByName[item.name] = product;
+
+    for (const variantData of item.variants) {
+      const variant = await ProductVariant.create({
+        productId: product.id,
+        sku: variantData.sku,
+        size: variantData.size,
+        color: variantData.color
+      });
+
+      await Inventory.create({
+        variantId: variant.id,
+        stock: variantData.stock,
+        reserved: variantData.reserved,
+        minStock: 5,
+        location: 'almacen principal'
+      });
+    }
+  }
 
   // Documentos en Mongo
   await Customer.deleteMany({});
@@ -96,13 +162,14 @@ async function seed() {
     ]
   });
 
+  const runnerX = productByName['Stride Runner X'];
   await Order.create({
     customerId: cliente._id,
     salesPersonId: userByEmail['sales@stride.co'].id,
     paymentMethod: 'CARD',
-    totals: { subtotal: 249.90, shipping: 0, discount: 0, total: 249.90 },
+    totals: { subtotal: runnerX.price, shipping: 0, discount: 0, total: runnerX.price },
     shippingAddress: { street: 'Av. Principal', number: '100', city: 'Chihuahua', state: 'Chihuahua', postalCode: '31000', country: 'Mexico' },
-    items: [{ productId: camiseta.id, quantity: 1, unitPrice: 249.90 }],
+    items: [{ productId: runnerX.id, quantity: 1, unitPrice: runnerX.price }],
     statusHistory: [{ status: 'PENDING', changedById: userByEmail['sales@stride.co'].id, note: 'Orden creada' }]
   });
 }

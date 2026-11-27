@@ -116,6 +116,7 @@ describe('E2E RBAC', () => {
       .send({
         name: `Producto temporal RBAC ${Date.now()}`,
         description: 'Producto para prueba E2E',
+        category: 'Running',
         price: 99.99
       });
 

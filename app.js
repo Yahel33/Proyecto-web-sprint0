@@ -16,13 +16,18 @@ var inventoryRouter = require('./routes/api/inventory');
 var customersRouter = require('./routes/api/customers');
 var ordersRouter = require('./routes/api/orders');
 var authRouter = require('./routes/api/auth');
+var webAuthRouter = require('./routes/web/auth');
 var storeRouter = require('./routes/web/store');
 var adminRouter = require('./routes/web/admin');
 const i18n = require('./config/i18n');
+const persistLocale = require('./middlewares/localeCookie');
 const flash = require('./middlewares/flash');
 const webLocals = require('./middlewares/webLocals');
 
 var app = express();
+
+// render esta detras de un proxy, lo necesita la cookie secure en produccion
+app.set('trust proxy', 1);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -34,6 +39,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(config.get('jwt.secret')));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(i18n.init);
+app.use(persistLocale);
 app.use(flash);
 app.use(webLocals);
 
@@ -47,6 +53,7 @@ app.use('/api/inventory', inventoryRouter);
 app.use('/api/customers', customersRouter);
 app.use('/api/orders', ordersRouter);
 app.use('/api/auth', authRouter);
+app.use('/', webAuthRouter);
 app.use('/admin', adminRouter);
 app.use('/', storeRouter);
 

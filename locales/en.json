@@ -5,7 +5,22 @@
     "loginSuccessful": "Login successful",
     "userCreated": "User created",
     "errorCreatingUser": "Error creating user",
-    "errorDuringLogin": "Error during login"
+    "errorDuringLogin": "Error during login",
+    "logoutSuccess": "Signed out",
+    "login": {
+      "pageTitle": "Stride & Co. | Sign in",
+      "description": "Sign in to access the Stride & Co. admin panel.",
+      "subtitle": "Admin panel access",
+      "emailLabel": "Email",
+      "passwordLabel": "Password",
+      "submit": "Enter the admin panel",
+      "togglePassword": "Show or hide password",
+      "backToStore": "Back to store"
+    },
+    "validation": {
+      "emailInvalid": "Enter a valid email address",
+      "passwordRequired": "Password is required"
+    }
   },
   "common": {
     "list": "List retrieved",

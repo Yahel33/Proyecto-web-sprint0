@@ -18,6 +18,7 @@
     "debug": "~2.6.9",
     "express": "^4.22.3",
     "express-jwt": "^8.5.1",
+    "express-validator": "^7.3.2",
     "http-errors": "~1.6.3",
     "i18n": "^0.15.4",
     "jsonwebtoken": "^9.0.3",
@@ -35,13 +36,10 @@
     "nodemon": "^3.1.14",
     "supertest": "^7.2.2"
   },
-
   "jest": {
-  "testPathIgnorePatterns": [
-    "/node_modules/",
-    "[\\\\/]test[\\\\/]e2e[\\\\/]"
-  ]
-}
-
-  
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "[\\\\/]test[\\\\/]e2e[\\\\/]"
+    ]
+  }
 }

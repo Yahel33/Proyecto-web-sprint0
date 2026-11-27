@@ -5,7 +5,22 @@
     "loginSuccessful": "Inicio de sesion exitoso",
     "userCreated": "Usuario creado",
     "errorCreatingUser": "Error al crear el usuario",
-    "errorDuringLogin": "Error al iniciar sesion"
+    "errorDuringLogin": "Error al iniciar sesion",
+    "logoutSuccess": "Sesion cerrada",
+    "login": {
+      "pageTitle": "Stride & Co. | Iniciar sesion",
+      "description": "Inicia sesion para acceder al panel administrativo de Stride & Co.",
+      "subtitle": "Acceso al panel administrativo",
+      "emailLabel": "Correo electronico",
+      "passwordLabel": "Contrasena",
+      "submit": "Entrar al administrador",
+      "togglePassword": "Mostrar u ocultar contrasena",
+      "backToStore": "Volver a la tienda"
+    },
+    "validation": {
+      "emailInvalid": "Ingresa un correo electronico valido",
+      "passwordRequired": "La contrasena es obligatoria"
+    }
   },
   "common": {
     "list": "Listado obtenido",

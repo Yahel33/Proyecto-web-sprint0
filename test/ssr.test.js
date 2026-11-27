@@ -101,4 +101,24 @@ describe('Base SSR', function () {
     expect(res.text).not.toContain('hash-super-secreto');
     expect(res.text).not.toContain('salt-super-secreto');
   });
+
+  test('el idioma elegido con ?lang=es se mantiene en el siguiente post sin query', async function () {
+    var agent = request.agent(app);
+    await agent.get('/login?lang=es');
+
+    var res = await agent.post('/login').send({ email: 'no-es-email', password: '' });
+
+    expect(res.status).toBe(400);
+    expect(res.text).toContain(es.auth.validation.emailInvalid);
+  });
+
+  test('el idioma elegido con ?lang=en se mantiene en el siguiente post sin query', async function () {
+    var agent = request.agent(app);
+    await agent.get('/login?lang=en');
+
+    var res = await agent.post('/login').send({ email: 'no-es-email', password: '' });
+
+    expect(res.status).toBe(400);
+    expect(res.text).toContain(en.auth.validation.emailInvalid);
+  });
 });

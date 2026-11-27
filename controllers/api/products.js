@@ -1,6 +1,6 @@
 const createSqlResourceController = require('./sqlResourceController');
-const { Product } = require('../../models/sql');
+const productService = require('../../services/product.service');
 
-module.exports = createSqlResourceController(Product, {
+module.exports = createSqlResourceController(productService, {
   include: [{ association: 'variants', include: [{ association: 'inventory' }] }]
 });

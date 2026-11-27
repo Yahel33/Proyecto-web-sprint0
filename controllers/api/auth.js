@@ -1,27 +1,15 @@
-const { User } = require('../../models/sql');
-const { hashPassword, verifyPassword } = require('../../utils/password');
-const jwt = require('jsonwebtoken');
-const config = require('config');
+const authService = require('../../services/auth.service');
 
 // Crea un usuario guardando la contraseña de forma segura (hash + salt).
 async function register(req, res) {
   try {
-    const { firstName, lastName, email, roleId, password } = req.body;
+    const { email, password } = req.body;
 
     if (!email || !password) {
       return res.status(400).json({ message: req.__('auth.credentialsRequired') });
     }
 
-    const { password_hash, salt_key } = await hashPassword(password);
-
-    const user = await User.create({
-      firstName,
-      lastName,
-      email,
-      roleId,
-      password_hash,
-      salt_key
-    });
+    const user = await authService.register(req.body);
 
     res.status(201).json({ message: req.__('auth.userCreated'), data: user });
   } catch (err) {
@@ -38,28 +26,13 @@ async function login(req, res) {
       return res.status(400).json({ message: req.__('auth.credentialsRequired') });
     }
 
-    const user = await User.findOne({ where: { email } });
-
     // Mismo mensaje generico si el usuario no existe o la contrasena es incorrecta.
-    if (!user || !user.active) {
+    const user = await authService.authenticate(email, password);
+    if (!user) {
       return res.status(401).json({ message: req.__('auth.invalidCredentials') });
     }
 
-    const passwordOk = await verifyPassword(password, user.password_hash);
-    if (!passwordOk) {
-      return res.status(401).json({ message: req.__('auth.invalidCredentials') });
-    }
-
-    const token = jwt.sign(
-      { sub: String(user.id) },
-      config.get('jwt.secret'),
-      {
-        expiresIn: config.get('jwt.expiresIn'),
-        issuer: config.get('jwt.issuer'),
-        audience: config.get('jwt.audience'),
-        algorithm: 'HS256'
-      }
-    );
+    const token = authService.issueToken(user);
 
     res.status(200).json({ message: req.__('auth.loginSuccessful'), token });
   } catch (err) {

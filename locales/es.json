@@ -19,6 +19,65 @@
     "routeNotFound": "Ruta no encontrada",
     "serverError": "Error del servidor",
     "unauthorized": "No autorizado",
-    "forbidden": "Acceso denegado"
+    "forbidden": "Acceso denegado",
+    "table": {
+      "empty": "Sin registros"
+    },
+    "pagination": {
+      "label": "Paginacion",
+      "previous": "Anterior",
+      "next": "Siguiente"
+    }
+  },
+  "layout": {
+    "tagline": "MOVE YOUR WAY",
+    "nav": {
+      "home": "Inicio",
+      "catalog": "Productos",
+      "orders": "Mis pedidos",
+      "cart": "Bolsa",
+      "logout": "Cerrar sesion",
+      "adminAccess": "Administrador"
+    },
+    "footer": {
+      "links": "Catalogo . Pedidos . Soporte",
+      "rights": "© 2026 Stride-Co. Todos los derechos reservados."
+    }
+  },
+  "store": {
+    "defaultTitle": "Stride & Co. | Tienda",
+    "defaultDescription": "Tenis urbanos, deportivos y esenciales para moverte a tu ritmo.",
+    "productCard": {
+      "viewDetail": "Ver detalle"
+    },
+    "comingSoon": {
+      "title": "Proximamente",
+      "description": "Esta seccion de la tienda esta en construccion.",
+      "back": "Volver al inicio"
+    }
+  },
+  "admin": {
+    "defaultTitle": "Stride & Co. | Administracion",
+    "defaultDescription": "Panel administrativo de Stride & Co.",
+    "sidebar": {
+      "label": "Panel administrativo"
+    },
+    "breadcrumb": "Stride-Co / Administracion",
+    "nav": {
+      "dashboard": "Dashboard",
+      "products": "Productos",
+      "variants": "Variantes",
+      "inventory": "Inventario",
+      "orders": "Pedidos",
+      "customers": "Clientes",
+      "users": "Usuarios",
+      "roles": "Roles y permisos",
+      "backToStore": "Ver tienda",
+      "logout": "Cerrar sesion"
+    },
+    "comingSoon": {
+      "title": "Proximamente",
+      "description": "Esta seccion del panel esta en construccion."
+    }
   }
 }

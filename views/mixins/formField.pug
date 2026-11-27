@@ -1,0 +1,15 @@
+mixin formField(name, label, value, options)
+  - options = options || {}
+  .mb-3
+    label.form-label(for=name)= label
+    input.form-control(
+      class=options.errors && options.errors[name] ? 'is-invalid' : ''
+      type=options.type || 'text'
+      id=name
+      name=name
+      value=value
+      placeholder=options.placeholder
+      required=options.required
+    )
+    if options.errors && options.errors[name]
+      .invalid-feedback= options.errors[name]

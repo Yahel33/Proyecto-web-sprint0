@@ -19,6 +19,65 @@
     "routeNotFound": "Route not found",
     "serverError": "Server error",
     "unauthorized": "Unauthorized",
-    "forbidden": "Forbidden"
+    "forbidden": "Forbidden",
+    "table": {
+      "empty": "No records"
+    },
+    "pagination": {
+      "label": "Pagination",
+      "previous": "Previous",
+      "next": "Next"
+    }
+  },
+  "layout": {
+    "tagline": "MOVE YOUR WAY",
+    "nav": {
+      "home": "Home",
+      "catalog": "Products",
+      "orders": "My orders",
+      "cart": "Cart",
+      "logout": "Log out",
+      "adminAccess": "Admin"
+    },
+    "footer": {
+      "links": "Catalog . Orders . Support",
+      "rights": "© 2026 Stride-Co. All rights reserved."
+    }
+  },
+  "store": {
+    "defaultTitle": "Stride & Co. | Store",
+    "defaultDescription": "Urban, athletic and everyday sneakers to move at your own pace.",
+    "productCard": {
+      "viewDetail": "View detail"
+    },
+    "comingSoon": {
+      "title": "Coming soon",
+      "description": "This storefront section is under construction.",
+      "back": "Back to home"
+    }
+  },
+  "admin": {
+    "defaultTitle": "Stride & Co. | Admin",
+    "defaultDescription": "Stride & Co. admin panel.",
+    "sidebar": {
+      "label": "Admin panel"
+    },
+    "breadcrumb": "Stride-Co / Admin",
+    "nav": {
+      "dashboard": "Dashboard",
+      "products": "Products",
+      "variants": "Variants",
+      "inventory": "Inventory",
+      "orders": "Orders",
+      "customers": "Customers",
+      "users": "Users",
+      "roles": "Roles and permissions",
+      "backToStore": "View store",
+      "logout": "Log out"
+    },
+    "comingSoon": {
+      "title": "Coming soon",
+      "description": "This admin section is under construction."
+    }
   }
 }

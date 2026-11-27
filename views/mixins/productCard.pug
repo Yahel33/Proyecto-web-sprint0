@@ -1,0 +1,14 @@
+mixin productCard(product)
+  .col-sm-6.col-lg-3
+    a.text-decoration-none.text-reset(href=`/catalogo/${product.id}`)
+      .product-tile
+        .shoe-art
+          span.tag.badge.text-bg-light= product.category
+        .p-3
+          .tiny= product.brand
+          h5.fw-bold.my-1= product.name
+          .d-flex.justify-content-between.align-items-center
+            strong= formatPrice(product.price)
+            span.text-decoration-underline.tiny
+              = __('store.productCard.viewDetail') + ' '
+              i.bi.bi-arrow-up-right

@@ -72,4 +72,4 @@ function authorize(resource, action, possession, options = {}) {
   };
 }
 
-module.exports = { authorize, parsePermissionKey, accessControlForRole };
+module.exports = { authorize, parsePermissionKey, accessControlForRole, accessMethod };

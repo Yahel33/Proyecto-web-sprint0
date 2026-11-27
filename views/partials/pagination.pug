@@ -1,0 +1,10 @@
+if pagination && pagination.totalPages > 1
+  nav(aria-label=__('common.pagination.label'))
+    ul.pagination
+      li.page-item(class=pagination.page <= 1 ? 'disabled' : '')
+        a.page-link(href=buildPageLink(pagination.page - 1))= __('common.pagination.previous')
+      each n in pagination.pages
+        li.page-item(class=n === pagination.page ? 'active' : '')
+          a.page-link(href=buildPageLink(n))= n
+      li.page-item(class=pagination.page >= pagination.totalPages ? 'disabled' : '')
+        a.page-link(href=buildPageLink(pagination.page + 1))= __('common.pagination.next')

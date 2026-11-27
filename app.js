@@ -4,6 +4,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var config = require('config');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/api/users');
@@ -15,7 +16,11 @@ var inventoryRouter = require('./routes/api/inventory');
 var customersRouter = require('./routes/api/customers');
 var ordersRouter = require('./routes/api/orders');
 var authRouter = require('./routes/api/auth');
+var storeRouter = require('./routes/web/store');
+var adminRouter = require('./routes/web/admin');
 const i18n = require('./config/i18n');
+const flash = require('./middlewares/flash');
+const webLocals = require('./middlewares/webLocals');
 
 var app = express();
 
@@ -26,9 +31,11 @@ app.set('view engine', 'pug');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(cookieParser(config.get('jwt.secret')));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(i18n.init);
+app.use(flash);
+app.use(webLocals);
 
 app.use('/', indexRouter);
 app.use('/api/users', usersRouter);
@@ -40,6 +47,8 @@ app.use('/api/inventory', inventoryRouter);
 app.use('/api/customers', customersRouter);
 app.use('/api/orders', ordersRouter);
 app.use('/api/auth', authRouter);
+app.use('/admin', adminRouter);
+app.use('/', storeRouter);
 
 
 // 404 controlado para rutas inexistentes.

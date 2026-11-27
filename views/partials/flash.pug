@@ -1,0 +1,3 @@
+if flash && flash.message
+  .container.pt-3
+    .alert.mb-0(class=`alert-${flash.type || 'info'}`, role='alert')= flash.message

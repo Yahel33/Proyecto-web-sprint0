@@ -1,0 +1,13 @@
+mixin table(headers, rows)
+  .table-responsive
+    table.table.table-hover.align-middle.mb-0
+      thead.table-light
+        tr
+          each header in headers
+            th= header
+      tbody
+        if rows && rows.length
+          block
+        else
+          tr
+            td.text-center.text-secondary.py-4(colspan=headers.length)= __('common.table.empty')

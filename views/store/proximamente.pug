@@ -1,0 +1,8 @@
+extends ../layouts/store
+
+block content
+  .container.py-5.text-center
+    i.bi.bi-cone-striped.display-1.text-secondary
+    h2.fw-bold.mt-3= title
+    p.text-secondary= description
+    a.btn.btn-outline-dark(href='/')= __('store.comingSoon.back')

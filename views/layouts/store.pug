@@ -18,9 +18,9 @@ html(lang=locale)
           small.d-block.fw-normal.text-secondary(style='font-size:.59rem;letter-spacing:2px')= __('layout.tagline')
         nav.store-nav.d-flex.align-items-center
           a(href='/', class=currentPath === '/' ? 'active' : '')= __('layout.nav.home')
-          a(href='/catalogo', class=currentPath.startsWith('/catalogo') ? 'active' : '')= __('layout.nav.catalog')
-          a(href='/pedidos', class=currentPath.startsWith('/pedidos') ? 'active' : '')= __('layout.nav.orders')
-          a(href='/bolsa', class=currentPath.startsWith('/bolsa') ? 'active' : '')
+          a(href='/products', class=currentPath.startsWith('/products') ? 'active' : '')= __('layout.nav.catalog')
+          a(href='/my/orders', class=currentPath.startsWith('/my/orders') ? 'active' : '')= __('layout.nav.orders')
+          a(href='/cart', class=currentPath.startsWith('/cart') ? 'active' : '')
             i.bi.bi-bag
             = ' ' + __('layout.nav.cart')
         .d-flex.align-items-center.gap-2

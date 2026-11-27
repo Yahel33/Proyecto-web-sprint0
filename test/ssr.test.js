@@ -74,7 +74,7 @@ describe('Base SSR', function () {
     sql.Role.findByPk.mockResolvedValue({ id: 1, name: 'sales', permissions: [] });
 
     var res = await request(app)
-      .get('/admin/productos')
+      .get('/admin/products')
       .set('Authorization', `Bearer ${adminToken()}`);
 
     expect(res.status).toBe(403);

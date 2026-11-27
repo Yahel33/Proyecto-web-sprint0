@@ -1,7 +1,7 @@
 var createApiResourceRoutes = require('./apiResourceRoutes');
-var controller = require('../controllers/variants');
-var authenticate = require('../middlewares/authenticate');
-var { authorize } = require('../middlewares/authorize');
+var controller = require('../../controllers/api/variants');
+var authenticate = require('../../middlewares/authenticate');
+var { authorize } = require('../../middlewares/authorize');
 
 module.exports = createApiResourceRoutes(controller, {
   list: [authenticate, authorize('variants', 'read', 'any')],

@@ -6,15 +6,15 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var rolesRouter = require('./routes/roles');
-var permissionsRouter = require('./routes/permissions');
-var productsRouter = require('./routes/products');
-var variantsRouter = require('./routes/variants');
-var inventoryRouter = require('./routes/inventory');
-var customersRouter = require('./routes/customers');
-var ordersRouter = require('./routes/orders');
-var authRouter = require('./routes/auth');
+var usersRouter = require('./routes/api/users');
+var rolesRouter = require('./routes/api/roles');
+var permissionsRouter = require('./routes/api/permissions');
+var productsRouter = require('./routes/api/products');
+var variantsRouter = require('./routes/api/variants');
+var inventoryRouter = require('./routes/api/inventory');
+var customersRouter = require('./routes/api/customers');
+var ordersRouter = require('./routes/api/orders');
+var authRouter = require('./routes/api/auth');
 const i18n = require('./config/i18n');
 
 var app = express();

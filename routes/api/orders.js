@@ -1,8 +1,8 @@
 var createApiResourceRoutes = require('./apiResourceRoutes');
-var controller = require('../controllers/orders');
-var { Customer } = require('../models/mongo');
-var authenticate = require('../middlewares/authenticate');
-var { authorize } = require('../middlewares/authorize');
+var controller = require('../../controllers/api/orders');
+var { Customer } = require('../../models/mongo');
+var authenticate = require('../../middlewares/authenticate');
+var { authorize } = require('../../middlewares/authorize');
 
 async function orderOwnerId(req) {
   var order = await controller.findById(req.params.id);

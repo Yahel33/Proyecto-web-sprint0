@@ -1,5 +1,5 @@
-const { User } = require('../models/sql');
-const { hashPassword, verifyPassword } = require('../utils/password');
+const { User } = require('../../models/sql');
+const { hashPassword, verifyPassword } = require('../../utils/password');
 const jwt = require('jsonwebtoken');
 const config = require('config');
 

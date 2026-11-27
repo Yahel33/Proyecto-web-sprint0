@@ -90,6 +90,14 @@ describe('Base SSR', function () {
     expect(res.text).toContain(en.store.comingSoon.title);
   });
 
+  test('una pagina proximamente usa su propio title y no el de la capa', async function () {
+    var res = await request(app).get('/products');
+
+    expect(res.status).toBe(200);
+    expect(res.text).toContain(`<title>${es.store.comingSoon.title}</title>`);
+    expect(res.text).not.toContain(`<title>${es.store.defaultTitle}</title>`);
+  });
+
   test('una pagina web con sesion nunca expone password_hash ni salt_key', async function () {
     var res = await request(app)
       .get('/admin')

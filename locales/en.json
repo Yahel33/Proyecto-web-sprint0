@@ -79,5 +79,23 @@
       "title": "Coming soon",
       "description": "This admin section is under construction."
     }
+  },
+  "errors": {
+    "backHome": "Back to home",
+    "404": {
+      "title": "Page not found",
+      "message": "The page you are looking for does not exist or was moved."
+    },
+    "403": {
+      "title": "Restricted access",
+      "message": "You do not have permission to view this page."
+    },
+    "401": {
+      "message": "You need to sign in to continue."
+    },
+    "500": {
+      "title": "Server error",
+      "message": "Something went wrong. Please try again later."
+    }
   }
 }

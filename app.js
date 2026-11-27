@@ -56,31 +56,34 @@ app.use(function (req, res, next) {
   next(createError(404));
 });
 
-app.use(function (err, req, res, next) {
-  if (err.name === 'UnauthorizedError') {
-    return res.status(401).json({
-      message: req.__('common.unauthorized'),
-      error: err.message
-    });
-  }
-  next(err);
-});
-
+// manejador central: json en /api, paginas html en el resto, sin stack en la respuesta
 app.use(function (err, req, res, _next) {
-  if (req.path.startsWith('/api')) {
-    return res.status(err.status || 500).json({
-      message: req.__(err.status === 404 ? 'common.routeNotFound' : 'common.serverError'),
-      error: err.message
-    });
+  const status = err.name === 'UnauthorizedError' ? 401 : (err.status || 500);
+  const isApi = req.originalUrl.startsWith('/api');
+
+  if (status >= 500) {
+    console.error(err);
   }
 
+  if (isApi) {
+    const messageKey = status === 404 ? 'common.routeNotFound'
+      : status === 401 ? 'common.unauthorized'
+        : status === 403 ? 'common.forbidden'
+          : 'common.serverError';
 
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+    return res.status(status).json({ message: req.__(messageKey), error: err.message });
+  }
 
-  // render the error page
-  res.status(err.status || 500);
-  return res.render('error');
+  if (status === 404) {
+    return res.status(404).render('errors/404');
+  }
+
+  if (status === 401 || status === 403) {
+    const message = req.__(status === 401 ? 'errors.401.message' : 'errors.403.message');
+    return res.status(status).render('errors/403', { status, message });
+  }
+
+  return res.status(500).render('errors/500');
 });
 
 module.exports = app;

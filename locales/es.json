@@ -79,5 +79,23 @@
       "title": "Proximamente",
       "description": "Esta seccion del panel esta en construccion."
     }
+  },
+  "errors": {
+    "backHome": "Volver al inicio",
+    "404": {
+      "title": "Pagina no encontrada",
+      "message": "La pagina que buscas no existe o fue movida."
+    },
+    "403": {
+      "title": "Acceso restringido",
+      "message": "No tienes permiso para ver esta pagina."
+    },
+    "401": {
+      "message": "Necesitas iniciar sesion para continuar."
+    },
+    "500": {
+      "title": "Error del servidor",
+      "message": "Ocurrio un problema inesperado. Intenta de nuevo mas tarde."
+    }
   }
 }

@@ -1,3 +1,4 @@
+const createError = require('http-errors');
 const { AccessControl } = require('accesscontrol');
 const { Role, Permission } = require('../models/sql');
 
@@ -44,16 +45,24 @@ function authorize(resource, action, possession, options = {}) {
   }
 
   return async function authorizeRequest(req, res, next) {
+    // en /api se responde 403 en json de inmediato, en web se delega al manejador central
+    function forbidden() {
+      if (req.originalUrl.startsWith('/api')) {
+        return res.status(403).json({ message: req.__('common.forbidden') });
+      }
+      return next(createError(403, req.__('common.forbidden')));
+    }
+
     try {
       if (!req.user || !req.user.roleId) {
-        return res.status(403).json({ message: req.__('common.forbidden') });
+        return forbidden();
       }
 
       const authorization = await accessControlForRole(req.user.roleId);
-      if (!authorization) return res.status(403).json({ message: req.__('common.forbidden') });
+      if (!authorization) return forbidden();
 
       const permission = authorization.ac.can(authorization.role.name)[accessMethod(action, possession)](resource);
-      if (!permission.granted) return res.status(403).json({ message: req.__('common.forbidden') });
+      if (!permission.granted) return forbidden();
 
       if (possession === 'own') {
         const ownerId = options.getOwnerId
@@ -61,7 +70,7 @@ function authorize(resource, action, possession, options = {}) {
           : req.resourceOwnerId;
 
         if (ownerId === undefined || ownerId === null || String(ownerId) !== String(req.user.id)) {
-          return res.status(403).json({ message: req.__('common.forbidden') });
+          return forbidden();
         }
       }
 
